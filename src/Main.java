@@ -4,12 +4,10 @@ import entities.Product;
 
 public void main(String[] args) {
     Random random = new Random();
-    List<Product> listaProdotti = new ArrayList<>();
+
 // magazino
 
     Product libroDellaGiungla = new Product(1L, "il libro della giungla", "book", 19.99);
-
-
     Product aladin = new Product(2L, "Aladin", "book", 15.99);
     Product laBibbia = new Product(3L, "La Bibbia", "book", 199.99);
     Product laSteleDiRosetta = new Product(4L, "La stele di Rosetta", "book", 1999.99);
@@ -26,25 +24,13 @@ public void main(String[] args) {
     Product moto = new Product(15L, "Ducati", "Boys", 10139.99);
 
 
-    listaProdotti.add(libroDellaGiungla);
-    listaProdotti.add(aladin);
-    listaProdotti.add(laBibbia);
-    listaProdotti.add(laSteleDiRosetta);
-    listaProdotti.add(hercules);
-    listaProdotti.add(laPanteraNera);
-    listaProdotti.add(laDisfidaDiBarletta);
-    listaProdotti.add(ilPianetaDelTesoro);
-    listaProdotti.add(pannolini);
-    listaProdotti.add(giochi);
-    listaProdotti.add(pomata);
-    listaProdotti.add(biglietti);
-    listaProdotti.add(moto);
-    listaProdotti.add(bigliettiCalcio);
-    listaProdotti.add(fucile);
+    List<Product> listaProdotti = new ArrayList<>(List.of(laBibbia,
+            ilPianetaDelTesoro, libroDellaGiungla, aladin, laSteleDiRosetta,
+            hercules, laPanteraNera, laDisfidaDiBarletta, pannolini, giochi,
+            pomata, biglietti, moto, bigliettiCalcio, fucile));
 
 
     //clienti
-    List<Customer> listaClienti = new ArrayList<>();
 
     Customer marco = new Customer(50L, "Marco", 0);
     Customer giada = (new Customer(51L, "Giada", 1));
@@ -53,42 +39,15 @@ public void main(String[] args) {
     Customer alfredo = (new Customer(54L, "ALfredo", 1));
     Customer matteo = (new Customer(55L, "Matteo", 2));
 
-
-    listaClienti.add(marco);
-    listaClienti.add(giada);
-    listaClienti.add(alessia);
-    listaClienti.add(luana);
-    listaClienti.add(alfredo);
-    listaClienti.add(matteo);
+    List<Customer> listaClienti = new ArrayList<>(List.of(marco, giada, alessia, luana, alfredo, matteo));
 
 
     //ORDINI
 
-    List<Product> ordine1 = new ArrayList<>();
-
-    ordine1.add(ilPianetaDelTesoro);
-    ordine1.add(pannolini);
-    ordine1.add(hercules);
-
-
-    List<Product> ordine2 = new ArrayList<>();
-
-    ordine2.add(laPanteraNera);
-    ordine2.add(laDisfidaDiBarletta);
-    ordine2.add(biglietti);
-
-
-    List<Product> ordine3 = new ArrayList<>();
-    ordine3.add(laBibbia);
-    ordine3.add(laSteleDiRosetta);
-    ordine3.add(fucile);
-
-    List<Product> ordine4 = new ArrayList<>();
-    ordine4.add(biglietti);
-    ordine4.add(pomata);
-    ordine4.add(moto);
-
-
+    List<Product> ordine1 = new ArrayList<>(List.of(ilPianetaDelTesoro, pannolini, hercules));
+    List<Product> ordine2 = new ArrayList<>(List.of(laPanteraNera, laDisfidaDiBarletta, biglietti));
+    List<Product> ordine3 = new ArrayList<>(List.of(laBibbia, laSteleDiRosetta, fucile));
+    List<Product> ordine4 = new ArrayList<>(List.of(biglietti, pomata, moto));
     List<Order> listaOrdini = new ArrayList<>();
 
     listaOrdini.add(new Order(70L, "completato", LocalDate.of(2025, 1, 31), LocalDate.now(), ordine1, marco));
@@ -107,8 +66,7 @@ public void main(String[] args) {
     System.out.println("*********** LISTA LIBRI PREZZO MAGGIORE DI 100 ************");
 
     List<Product> listaLibriMax100 = listaProdotti.stream()
-            .filter(product -> product.getCategory().equals("book"))
-            .filter(product -> product.getPrice() > 100).toList();
+            .filter(product -> product.getCategory().equals("book") && product.getPrice() > 100).toList();
 
     listaLibriMax100.forEach(System.out::println);
 
@@ -145,7 +103,7 @@ public void main(String[] args) {
             .filter(order -> order.getOrderDate().isAfter(dataInizio) && order.getOrderDate().isBefore(dataFine))
             .toList();
 
-    
+
     List<Product> listaProdottiFinale = listaOrdiniT2Intervallo.stream()
             .flatMap(order -> order.getProducts().stream())
             .toList();
